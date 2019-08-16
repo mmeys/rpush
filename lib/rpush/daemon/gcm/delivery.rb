@@ -6,7 +6,7 @@ module Rpush
         include MultiJsonHelper
 
         host = "https://fcm.googleapis.com"
-        GCM_URI = URI.parse("#{host}/fcm/send"
+        GCM_URI = URI.parse("#{host}/fcm/send")
         UNAVAILABLE_STATES = %w(Unavailable InternalServerError)
         INVALID_REGISTRATION_ID_STATES = %w(InvalidRegistration MismatchSenderId NotRegistered InvalidPackageName)
 
