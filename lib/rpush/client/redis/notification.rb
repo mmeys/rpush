@@ -42,6 +42,7 @@ module Rpush
         attribute :priority, :integer
         attribute :url_args, :array
         attribute :category, :string
+        attribute :notification, :hash
 
         def app
           return nil unless app_id
