@@ -43,6 +43,7 @@ module Rpush
         attribute :url_args, :array
         attribute :category, :string
         attribute :notification, :hash
+        attribute :fcm_auth_key, :string
 
         def app
           return nil unless app_id
