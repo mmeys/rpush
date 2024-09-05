@@ -34,9 +34,8 @@ module Rpush
         def handle_response(response)
           case response.code.to_i
           when 200
-            ok(response)
+            ok
           when 400
-            log_warn("Bad Request. " + response.body.inspect)
             bad_request
           when 401
             unauthorized
@@ -49,31 +48,10 @@ module Rpush
           end
         end
 
-        def ok(response)
-          results = process_response(response)
-          handle_successes(results.successes)
-
-          if results.failures.any?
-            handle_failures(results.failures, response)
-          else
-            mark_delivered
-            log_info("#{@notification.id} sent to #{@notification.registration_ids.join(', ')}")
-          end
-        end
-
-        def process_response(response)
-          body = multi_json_load(response.body)
-          results = Results.new(body['results'], @notification.registration_ids)
-          results.process(invalid: INVALID_REGISTRATION_ID_STATES, unavailable: UNAVAILABLE_STATES)
-          results
-        end
-
-        def handle_successes(successes)
-          successes.each do |result|
-            reflect(:gcm_delivered_to_recipient, @notification, result[:registration_id])
-            next unless result.key?(:canonical_id)
-            reflect(:gcm_canonical_id, result[:registration_id], result[:canonical_id])
-          end
+        def ok
+          reflect(:gcm_delivered_to_recipient, @notification, @notification.registration_ids.first)
+          mark_delivered
+          log_info("#{@notification.id} sent to #{@notification.registration_ids.join(', ')}")
         end
 
         def handle_failures(failures, response)
