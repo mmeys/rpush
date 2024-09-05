@@ -23,7 +23,7 @@ module Rpush
             json['notification'] = notification if notification
             json['collapse_key'] = collapse_key if collapse_key
             json['time_to_live'] = expiry if expiry
-            json
+            { 'message' => json }
           end
         end
       end
