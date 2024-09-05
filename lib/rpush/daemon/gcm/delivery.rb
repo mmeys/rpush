@@ -6,7 +6,7 @@ module Rpush
         include MultiJsonHelper
 
         host = "https://fcm.googleapis.com"
-        GCM_URI = URI.parse("#{host}/v1/projects/houses-123cc/messages:send")
+        GCM_URI = URI.parse("#{host}/v1/projects/houses-2020/messages:send")
         UNAVAILABLE_STATES = %w(Unavailable InternalServerError)
         INVALID_REGISTRATION_ID_STATES = %w(InvalidRegistration MismatchSenderId NotRegistered InvalidPackageName)
 
@@ -142,10 +142,8 @@ module Rpush
         end
 
         def do_post
-          #post = Net::HTTP::Post.new(GCM_URI.path, 'Content-Type'  => 'application/json',
-          #                                         'Authorization' => "Bearer #{@notification.app.auth_key}")
           post = Net::HTTP::Post.new(GCM_URI.path, 'Content-Type'  => 'application/json',
-                                                   'Authorization' => "Bearer ya29.a0AcM612yXyVEcEDqH10sXGjXLvqBYCwoGBweE45K8RFxjpXxYEoMUpl6sVj8Z_h_NH8SqZaW7rhQiLV8Ev1vwLEnUPPk_kNJrfOCD8yGcZUzW2w44W77DiJKfG8Jte9n2c_G7sZbunWu3HXXxMTd6HmWbDZO7v6jmEwCduEeZaCgYKAfUSARASFQHGX2MiPRpvcESfWH9WhG5W22GOiQ0175")
+                                                   'Authorization' => "Bearer #{@notification.app.auth_key}")
 
           post.body = @notification.as_json.to_json
           @http.request(GCM_URI, post)
