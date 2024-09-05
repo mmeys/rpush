@@ -36,6 +36,7 @@ module Rpush
           when 200
             ok(response)
           when 400
+            log_warn("Bad Request. " + response.body.inspect)
             bad_request
           when 401
             unauthorized
@@ -144,7 +145,7 @@ module Rpush
         def do_post
           post = Net::HTTP::Post.new(GCM_URI.path, 'Content-Type'  => 'application/json',
                                                    'Authorization' => "Bearer #{@notification.fcm_auth_key}")
-          log_warn("Trying to use Bearer : #{@notification.fcm_auth_key}")
+          log_warn("Debug content : #{@notification.as_json.to_json}")
 
           post.body = @notification.as_json.to_json
           @http.request(GCM_URI, post)
