@@ -18,7 +18,7 @@ module Rpush
             json = {
               'token' => registration_ids.first,
               'delay_while_idle' => delay_while_idle,
-              'data' => data.slice!(:auth_key)
+              'data' => data
             }
             json['notification'] = notification if notification
             json['collapse_key'] = collapse_key if collapse_key

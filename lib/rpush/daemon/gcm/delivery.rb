@@ -143,7 +143,8 @@ module Rpush
 
         def do_post
           post = Net::HTTP::Post.new(GCM_URI.path, 'Content-Type'  => 'application/json',
-                                                   'Authorization' => "Bearer #{@notification.data[:auth_key]}")
+                                                   'Authorization' => "Bearer #{@notification.fcm_auth_key}")
+          log_warn("Trying to use Bearer : #{@notification.fcm_auth_key}")
 
           post.body = @notification.as_json.to_json
           @http.request(GCM_URI, post)
