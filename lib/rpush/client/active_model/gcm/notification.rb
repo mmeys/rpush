@@ -17,12 +17,10 @@ module Rpush
           def as_json
             json = {
               'token' => registration_ids.first,
-              'delay_while_idle' => delay_while_idle,
               'data' => data
             }
             json['notification'] = notification if notification
             json['collapse_key'] = collapse_key if collapse_key
-            json['time_to_live'] = expiry if expiry
 
             { 'message' => json }
           end
